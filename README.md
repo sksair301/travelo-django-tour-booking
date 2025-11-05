@@ -1,5 +1,3 @@
-<div align="center">
-
 # **Travelo – Django Tour & Travel Booking Website**
 
 **Travelo** is a modern, fully responsive Django-based travel and tour booking platform.  
@@ -10,8 +8,6 @@ Designed and enhanced by animations for a delightful travel experience.
 [![Django](https://img.shields.io/badge/Django-5.x-092E20?logo=django&logoColor=white)](#)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)](#)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](#)
-
-</div>
 
 ##  Features
 
@@ -95,6 +91,7 @@ Designed and enhanced by animations for a delightful travel experience.
 
 
   
+
 
 
 
