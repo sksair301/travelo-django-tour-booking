@@ -5,7 +5,7 @@
 
 {% block content %}
 
-  <div class="row justify-content-center pb-4">
+<div class="row justify-content-center pb-4">
     <div class="col-md-12 heading-section text-center ftco-animate">
         <span class="subheading mt-3">Top Packages</span>
         <h2 class="mb-1">Explore Our Tour Packages</h2>
@@ -85,7 +85,8 @@
               <span class="text-muted small">Starting from</span>
               <h4 class="text-primary fw-bold mb-0">₹{{ package.price }}</h4>
             </div>
-             <a href="{% url 'booking' package.id %}" class="btn btn-outline-primary btn-sm rounded-pill">Book Now</a><i class="fa fa-arrow-right ms-1"></i>
+            <a href="{% url 'booking' package.id %}" class="btn btn-outline-primary btn-sm rounded-pill">
+              Book Now <i class="fa fa-arrow-right ms-1"></i>
             </a>
           </div>
         </div>
@@ -103,5 +104,306 @@
   </div>
 </div>
 
+<!-- ================================================== -->
+<!-- 🌦️ SLEEK GLASSMORPHISM WEATHER WIDGET (BELOW)   -->
+<!-- ================================================== -->
+
+{% if weather %}
+<div class="weather-section mt-5 mb-5">
+  <div class="container">
+    <!-- Weather Container with Background Image -->
+    <div class="weather-glass-card position-relative rounded-4 shadow-lg overflow-hidden p-5"
+         style="
+           background: linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 215, 196, 0.15) 100%),
+                       url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80') center/cover;
+           backdrop-filter: blur(12px);
+           border: 1px solid rgba(255, 255, 255, 0.3);
+           color: white;
+           min-height: 300px;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+         ">
+      
+      <!-- Background overlay for better text readability -->
+      <div class="position-absolute top-0 start-0 w-100 h-100"
+           style="background: rgba(30, 50, 80, 0.4); z-index: 1;"></div>
+
+      <!-- Weather Content Container -->
+      <div class="weather-content position-relative z-2 w-100">
+        
+        <!-- Header Row -->
+        <div class="row align-items-center mb-4">
+          <div class="col-md-6">
+            <h3 class="fw-bold mb-1 display-5" style="font-size: 2.5rem;">{{ weather.city }}</h3>
+            <p class="text-light mb-0">
+              <i class="fa fa-calendar me-2"></i>
+              <span class="current-date"></span>
+            </p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="text-light mb-0">
+              <i class="fa fa-info-circle me-2"></i>
+              <span class="fw-semibold">Updated just now</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Main Weather Display -->
+        <div class="row align-items-center g-4 mb-4">
+          <!-- Weather Icon & Temperature -->
+          <div class="col-md-6">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <!-- Weather Icon -->
+              <div>
+                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@4x.png" 
+                     alt="Weather icon" 
+                     style="width: 140px; height: 140px; filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));">
+              </div>
+              <!-- Temperature -->
+              <div>
+                <h1 class="fw-bold display-2 mb-0" style="font-size: 4rem; line-height: 1;">{{ weather.temp }}°C</h1>
+                <p class="text-light mb-0">{{ weather.desc|title }}</p>
+              </div>
+            </div>
+            <p class="text-light small">
+              <i class="fa fa-thermometer-half me-2 text-warning"></i>
+              Feels like <strong>{{ weather.feels_like }}°C</strong>
+            </p>
+          </div>
+
+          <!-- Quick Info Cards -->
+          <div class="col-md-6">
+            <div class="row g-3">
+              <!-- Wind Speed -->
+              <div class="col-6">
+                <div class="glass-info-card p-4 rounded-4 h-100"
+                     style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);">
+                  <p class="text-light small mb-2">
+                    <i class="fa fa-wind me-2"></i>Wind Speed
+                  </p>
+                  <h4 class="fw-bold mb-0">{{ weather.wind }} km/h</h4>
+                </div>
+              </div>
+
+              <!-- Humidity -->
+              <div class="col-6">
+                <div class="glass-info-card p-4 rounded-4 h-100"
+                     style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);">
+                  <p class="text-light small mb-2">
+                    <i class="fa fa-droplet me-2"></i>Humidity
+                  </p>
+                  <h4 class="fw-bold mb-0">{{ weather.humidity }}%</h4>
+                </div>
+              </div>
+
+              <!-- Visibility -->
+              <div class="col-6">
+                <div class="glass-info-card p-4 rounded-4 h-100"
+                     style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);">
+                  <p class="text-light small mb-2">
+                    <i class="fa fa-eye me-2"></i>Visibility
+                  </p>
+                  <h4 class="fw-bold mb-0">{% if weather.visibility %}{{ weather.visibility }} km{% else %}Good{% endif %}</h4>
+                </div>
+              </div>
+
+              <!-- Rain Chance -->
+              <div class="col-6">
+                <div class="glass-info-card p-4 rounded-4 h-100"
+                     style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);">
+                  <p class="text-light small mb-2">
+                    <i class="fa fa-cloud-rain me-2"></i>Rain Chance
+                  </p>
+                  <h4 class="fw-bold mb-0">{% if weather.rain_chance %}{{ weather.rain_chance }}%{% else %}Low{% endif %}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travel Recommendation Banner -->
+        <div class="travel-tip-banner p-4 rounded-4 mt-4"
+             style="backdrop-filter: blur(8px); background: rgba(255, 193, 7, 0.15); border-left: 4px solid #FFC107;">
+          <div class="d-flex align-items-center gap-3">
+            <i class="fa fa-lightbulb text-warning" style="font-size: 24px;"></i>
+            <div>
+              <p class="text-light fw-bold mb-1">Travel Tip</p>
+              <p class="text-light small mb-0">
+                {% if weather.temp > 35 %}
+                  🌞 <strong>Very Hot:</strong> Carry sunscreen, stay hydrated, wear light breathable clothes
+                {% elif weather.temp > 25 %}
+                  ☀️ <strong>Warm & Pleasant:</strong> Perfect weather for sightseeing! Light clothes recommended
+                {% elif weather.temp > 10 %}
+                  🧥 <strong>Cool:</strong> Bring a light jacket for comfort during tours
+                {% elif weather.temp <= 10 %}
+                  ❄️ <strong>Cold:</strong> Bundle up with warm layers, don't forget your coat!
+                {% endif %}
+                
+                {% if weather.humidity > 80 %}
+                  💧 High humidity expected - stay hydrated!
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ================================================== -->
+<!-- CSS STYLES                                         -->
+<!-- ================================================== -->
+
+<style>
+  /* Weather Glass Card */
+  .weather-glass-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .weather-glass-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(16px);
+  }
+
+  /* Weather Content */
+  .weather-content {
+    z-index: 2;
+  }
+
+  /* Glass Info Cards */
+  .glass-info-card {
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .glass-info-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Travel Tip Banner */
+  .travel-tip-banner {
+    transition: all 0.3s ease;
+    animation: slideInUp 0.5s ease-out 0.6s both;
+  }
+
+  .travel-tip-banner:hover {
+    background: rgba(255, 193, 7, 0.2) !important;
+  }
+
+  /* Animations */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .weather-section {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .weather-glass-card {
+      min-height: auto;
+      padding: 30px 20px !important;
+    }
+
+    .weather-content h1 {
+      font-size: 3rem !important;
+    }
+
+    .weather-content h3 {
+      font-size: 1.8rem !important;
+    }
+
+    .glass-info-card {
+      padding: 20px !important;
+    }
+
+    .travel-tip-banner {
+      padding: 20px !important;
+    }
+
+    .travel-tip-banner p {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .weather-glass-card {
+      min-height: auto;
+      padding: 20px !important;
+    }
+
+    .weather-content img {
+      width: 100px !important;
+      height: 100px !important;
+    }
+
+    .weather-content h1 {
+      font-size: 2.5rem !important;
+    }
+
+    .weather-content h3 {
+      font-size: 1.5rem !important;
+    }
+
+    .row.g-3 > div {
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+<!-- ================================================== -->
+<!-- JAVASCRIPT                                        -->
+<!-- ================================================== -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Format current date
+  const dateOptions = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  const today = new Date().toLocaleDateString('en-US', dateOptions);
+  
+  const dateElement = document.querySelector('.current-date');
+  if (dateElement) {
+    dateElement.textContent = today;
+  }
+
+  // Add staggered animation to glass info cards
+  const infoCards = document.querySelectorAll('.glass-info-card');
+  infoCards.forEach((card, index) => {
+    card.style.animation = `slideInUp 0.5s ease-out ${0.1 * (index + 1)}s both`;
+  });
+});
+</script>
 
 {% endblock %}

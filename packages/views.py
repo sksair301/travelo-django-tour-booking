@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-
+import requests
+from django.conf import settings
 from herosection.models import HeroSection
 from .models import Packages, BookingPackage, Itinerary
 from django.db.models import Q
@@ -9,7 +10,7 @@ from decimal import Decimal
 
 
 def package_list(request):
-    """Display all tour packages with filtering options"""
+    """Display all tour packages with filtering options + weather forecast"""
     packages = Packages.objects.all()
     hero = HeroSection.objects.first()
 
@@ -28,9 +29,32 @@ def package_list(request):
         except (ValueError, TypeError):
             pass
 
+    # Weather Forecast Section
+    weather = None
+    if destination:
+        api_key = settings.OPENWEATHER_API_KEY
+        try:
+            response = requests.get(
+                f"https://api.openweathermap.org/data/2.5/weather?q={destination}&appid={api_key}&units=metric"
+            )
+            if response.status_code == 200:
+                data = response.json()
+                weather = {
+                    'city': data['name'],
+                    'temp': data['main']['temp'],
+                    'desc': data['weather'][0]['description'].title(),
+                    'icon': data['weather'][0]['icon'],
+                    'humidity': data['main']['humidity'],
+                    'wind': data['wind']['speed'],
+                    'feels_like': data['main']['feels_like'],
+                }
+        except Exception as e:
+            print("Weather API Error:", e)
+
     context = {
         'packages': packages,
-        'hero':hero,
+        'hero': hero,
+        'weather': weather,
         'categories': [
             ('honeymoon', 'Honeymoon'),
             ('family', 'Family'),
@@ -140,17 +164,18 @@ def booking_confirmation(request, booking_id):
 
 
 def search_packages(request):
-    """Search packages with advanced filtering"""
+    """Search packages with advanced filtering + live weather info"""
     query = request.GET.get('q', '')
     category = request.GET.get('category')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     duration = request.GET.get('duration')
-    
+
     hero = HeroSection.objects.first()
 
     packages = Packages.objects.all()
 
+    # 🔍 Search logic
     if query:
         packages = packages.filter(
             Q(title__icontains=query) |
@@ -179,11 +204,13 @@ def search_packages(request):
         except (ValueError, TypeError):
             pass
 
+
     context = {
         'packages': packages,
         'query': query,
         'total_results': packages.count(),
-        'hero':hero
+        'hero': hero,
+        'weather': weather
     }
     return render(request, 'search_results.html', context)
 
@@ -219,3 +246,5 @@ def cancel_booking(request, booking_id):
             messages.success(request, 'Booking cancelled successfully.')
 
     return redirect('my_bookings')
+
+
