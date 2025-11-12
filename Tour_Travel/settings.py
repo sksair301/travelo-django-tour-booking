@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
-OPENWEATHER_API_KEY = "Your_API_KEY"
+OPENWEATHER_API_KEY = "3851d97755b5b2379f1f1923c1bc95fc"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-5z^6%s59$_n+8du+^-a7y%6e@l^16%1xa9y++2x2za_4s!@s&m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['travelo-django-tour-booking.onrender.com']
 
 
 # Application definition
