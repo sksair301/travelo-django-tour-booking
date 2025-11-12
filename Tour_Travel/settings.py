@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-5z^6%s59$_n+8du+^-a7y%6e@l^16%1xa9y++2x2za_4s!@s&m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['travelo-django-tour-booking.onrender.com']
+ALLOWED_HOSTS = ['travelo-django-tour-booking-1.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
